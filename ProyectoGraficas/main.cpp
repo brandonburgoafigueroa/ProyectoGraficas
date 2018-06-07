@@ -99,8 +99,7 @@ void DrawInfo()
 	// buffer for storing coinsCount
 	static const int buf_length = 4;
 	static char count_buffer[buf_length];
-	std::printf(count_buffer,"%d",pacman->lives);
-	std::printf(count_buffer + 1,"%d",board->coinsCount); // very unsafe! Be careful!
+
 
 	// updating coins count
 	// http://stackoverflow.com/questions/18847109/displaying-fixed-location-2d-text-in-a-3d-opengl-world-using-glut
