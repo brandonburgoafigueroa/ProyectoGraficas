@@ -5,19 +5,7 @@ class Pac : public Creature {
 public:
 	double z;
 	Pac(int x, int y);
-	~Pac();
-
-	// abilities:
-	bool Consume();
-
-	// visual:
 	void Draw();
-
-	// movement:
 	void Turn(int v);
-
 	void PadAndMove(int a);
-
-
-
 };
