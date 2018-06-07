@@ -153,7 +153,6 @@
     <ClCompile Include="creature.cpp" />
     <ClCompile Include="gameboard.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="pac.cpp" />
     <ClCompile Include="stdafx.cpp" />
   </ItemGroup>
   <ItemGroup>
