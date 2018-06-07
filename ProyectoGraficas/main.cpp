@@ -1,26 +1,22 @@
-﻿#define _USE_MATH_DEFINES
-#include <cmath>
+﻿#pragma once
 
 #include <windows.h>
 #include <GL/gl.h>
 #include "GL\glut.h"
-#include "creature.h"
-#include "pac.h"
-#include "gameboard.h"
-#include "scrnsave.h"
+#include "Pacman.h"
+#include "Bordes.h"
 #include <iostream>
 #include <string>
 
 
-GameBoard *board;
+Bordes *board;
 
 Pac *pacman;
 
 
-GLdouble centerX = GameBoard::CENTER_X;
-GLdouble centerY = GameBoard::CENTER_Y;
-GLdouble centerZ = GameBoard::CENTER_Z;
-GLdouble centerDistance = 15;
+GLdouble centerX = Bordes::CENTRO_X;
+GLdouble centerY = Bordes::CENTRO_Y;
+GLdouble centerZ = Bordes::CENTRO_Z;
 
 
 GLdouble eyeX = 0;
@@ -28,7 +24,7 @@ GLdouble eyeY = 0;
 GLdouble eyeZ = 0;
 
 
-void init()
+void Inicializar()
 {   
 	glEnable(GL_DEPTH_TEST); 
 	glEnable(GL_COLOR_MATERIAL); 
@@ -38,7 +34,7 @@ void init()
 	glEnable(GL_LIGHT0);
 }
 
-void display()
+void Mostrar()
 {
 	float orthoOffset = 2.0f;
 	glMatrixMode(GL_PROJECTION);
@@ -51,21 +47,20 @@ void display()
 
 	glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT ); 
 
-	eyeX = centerX + 5 * sin(0);
-	eyeY = centerY + centerDistance * sin(0) + 5 * sin(0);
-	eyeZ = centerZ + centerDistance * cos(0);
-	gluLookAt( eyeX, eyeY, eyeZ, centerX, centerY, centerZ, sin(0), cos(0), 0 );
+	eyeX = centerX;
+	eyeY = centerY;
+	eyeZ = centerZ + 15;
+	gluLookAt( eyeX, eyeY, eyeZ, centerX, centerY, centerZ, 0, 1, 0 );
 
 	pacman->Move();	
-	board->Draw();
+	board->Dibujar();
 	pacman->Draw();
-
 
     glFlush();
 	glutSwapBuffers();
 }
 
-void special( int key, int x, int y )
+void Teclado( int key, int x, int y )
 {
 	switch( key )
     {
@@ -92,23 +87,20 @@ void special( int key, int x, int y )
 int main(int argc, char** argv)
 {
 	glutInit( &argc, argv );
-	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGBA | GLUT_DEPTH); 
 	glutInitWindowPosition( 100, 10 );
 	glutInitWindowSize( 1000, 1000 );
-	glutCreateWindow("PackMan");
+	glutCreateWindow("Pacman Farol");
 
-	glutDisplayFunc( display );
-	glutIdleFunc(display);
+	glutDisplayFunc( Mostrar );
+	glutIdleFunc(Mostrar);
 
-	glutSpecialFunc(special);
+	glutSpecialFunc(Teclado);
 
 	
 	pacman = new Pac(15,2);
-	board = new GameBoard();
+	board = new Bordes();
 
-
-
-	init();
+	Inicializar();
 
 	glutMainLoop(); 
 

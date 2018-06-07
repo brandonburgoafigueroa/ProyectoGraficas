@@ -150,15 +150,13 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="gameboard.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="stdafx.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="basic_gl_shapes.h" />
-    <ClInclude Include="gameboard.h" />
-    <ClInclude Include="pac.h" />
-    <ClInclude Include="resource.h" />
+    <ClInclude Include="Bordes.h" />
+    <ClInclude Include="Pacman.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
   </ItemGroup>

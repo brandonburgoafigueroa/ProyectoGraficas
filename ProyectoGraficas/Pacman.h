@@ -13,7 +13,7 @@ public:
 	{
 		this->x = x;
 		this->y = y;
-		speed = 0.09;
+		speed = 0.07;
 		angle = 0;
 		top = true;
 		down = false;
