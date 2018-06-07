@@ -134,14 +134,11 @@ void display()
 	glMatrixMode( GL_MODELVIEW );
     glLoadIdentity();
 
-	glClearColor( 0.0f, 0.0f, 0.0f, 1.0f );
+
 	glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT ); // czysc bufory
 
 	// lighting stuff:
-	glPushMatrix();
-		GLfloat lightPos0[] = { pacman->x, pacman->y, 4.0f, 1.0f };
-		glLightfv(GL_LIGHT0, GL_POSITION, lightPos0);
-	glPopMatrix();
+
 
 	// camera movement stuff:
 	// http://gamedev.stackexchange.com/questions/43588/how-to-rotate-camera-centered-around-the-cameras-position
@@ -168,19 +165,6 @@ void display()
 
 	// move the pacman
 	pacman->Move();	
-
-	// wall check stops movement
-	pacman->WallCheck();
-
-	// coins eating
-	if (pacman->Consume())
-		board->coinsCount--;
-
-	// ghosts movement algorithms:
-	// Blinky:
-	
-
-	// actual pacman, ghosts and board drawing
 	board->Draw();
 	pacman->Draw();
 
@@ -230,10 +214,6 @@ void special( int key, int x, int y )
     reshape( glutGet( GLUT_WINDOW_WIDTH ), glutGet( GLUT_WINDOW_HEIGHT ) );
 }
 
-void timer(int v) 
-{
-	// maybe some visual effects?
-}
 
 int main(int argc, char** argv)
 {
@@ -249,8 +229,6 @@ int main(int argc, char** argv)
 	glutDisplayFunc( display );
 	glutReshapeFunc( reshape ); // trzeba zmienic parametry rzutowania
 	glutIdleFunc(display); // scena jest caly czas przeliczana w tle
-
-	glutTimerFunc(40, timer, 1);
 
 	glutSpecialFunc(special);
 
