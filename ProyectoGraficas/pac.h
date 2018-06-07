@@ -1,11 +1,17 @@
-#include "creature.h"
 
-class Pac : public Creature {
 
+class Pac
+{
+public:
+	float x, y;
+	double angle;
+	double speed;
 public:
 	
-	Pac(int x, int y):Creature(x, y)
+	Pac(int x, int y)
 	{
+		this->x = x;
+		this->y = y;
 		speed = 0.09;
 		angle = 0;
 	}
@@ -46,4 +52,10 @@ void Turn(int nangle)
 	{
 		angle = a;
 	}
+	void Move()
+	{
+		x += speed * cos(M_PI / 180 * angle); // dodawany jakis staly interwal
+		y += speed * sin(M_PI / 180 * angle);
+	}
+
 };

@@ -150,14 +150,12 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="creature.cpp" />
     <ClCompile Include="gameboard.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="stdafx.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="basic_gl_shapes.h" />
-    <ClInclude Include="creature.h" />
     <ClInclude Include="gameboard.h" />
     <ClInclude Include="pac.h" />
     <ClInclude Include="resource.h" />
