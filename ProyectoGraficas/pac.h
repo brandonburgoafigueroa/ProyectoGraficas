@@ -6,6 +6,7 @@ public:
 	float x, y;
 	double angle;
 	double speed;
+	bool top, down, left, right;
 public:
 	
 	Pac(int x, int y)
@@ -14,6 +15,10 @@ public:
 		this->y = y;
 		speed = 0.09;
 		angle = 0;
+		top = true;
+		down = false;
+		left = false;
+		right = false;
 	}
 	void Draw()
 	{
@@ -28,24 +33,36 @@ void Turn(int nangle)
 {
 	if (nangle == 180)
 	{
-		PadAndMove(nangle);
+		top = false;
+		down = false;
+		left = true;
+		right = false;
 	}
 	else
 		if (nangle == 0)
 		{
-			PadAndMove(nangle);
+			top = false;
+			down = false;
+			left = false;
+			right = true;
 
 		}
 		else
 			if (nangle == 90)
 			{
-				PadAndMove(nangle);
+				top = true;
+				down = false;
+				left = false;
+				right = false;
 
 			}
 			else
 				if (nangle == 270)
 				{
-					PadAndMove(nangle);
+					top = false;
+					down = true;
+					left = false;
+					right = false;
 				}
 }
 	void PadAndMove(int a)
@@ -54,8 +71,29 @@ void Turn(int nangle)
 	}
 	void Move()
 	{
-		x += speed * cos(M_PI / 180 * angle); // dodawany jakis staly interwal
-		y += speed * sin(M_PI / 180 * angle);
+		int xa, ya;
+		if (top)
+		{
+			ya=1;
+			xa = 0;
+		}
+		if (down)
+		{
+			ya = -1;
+			xa = 0;
+		}
+		if (left)
+		{
+			ya = 0;
+			xa = -1;
+		}
+		if (right)
+		{
+			ya = 0;
+			xa = 1;
+		}
+		x += speed * xa;
+		y += speed * ya;
 	}
 
 };
