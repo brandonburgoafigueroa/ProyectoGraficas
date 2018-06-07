@@ -152,8 +152,6 @@
   <ItemGroup>
     <ClCompile Include="creature.cpp" />
     <ClCompile Include="gameboard.cpp" />
-    <ClCompile Include="ghost.cpp" />
-    <ClCompile Include="ghost_red.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="pac.cpp" />
     <ClCompile Include="stdafx.cpp" />
@@ -162,8 +160,6 @@
     <ClInclude Include="basic_gl_shapes.h" />
     <ClInclude Include="creature.h" />
     <ClInclude Include="gameboard.h" />
-    <ClInclude Include="ghost.h" />
-    <ClInclude Include="ghost_red.h" />
     <ClInclude Include="pac.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="stdafx.h" />

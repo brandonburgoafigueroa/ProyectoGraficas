@@ -19,13 +19,6 @@ GameBoard *board;
 Pac *pacman;
 bool pacFollowed = false;
 
-// basic game information
-std::string infoText[] = 
-{
-	"Coins left: ",
-	"Lives: "
-};
-
 // zooming - max Z distance and min Z distance
 float maxZ = 15;
 float minZ = 8;
@@ -119,27 +112,6 @@ void DrawInfo()
 	glPushMatrix();
 		glLoadIdentity();
 		glColor3d(1.0, 1.0, 1.0);
-		//std::cout << static_cast <char>(board->coinsCount) << std::endl;
-		// text display functionality			
-		for (int i = 0; i < sizeof(infoText) / sizeof(infoText[0]); i++)
-		{
-			glRasterPos2i(10, 500 - 20 - i * 18); // initial position of a raster.
-			for (std::string::iterator j = infoText[i].begin(); j != infoText[i].end(); ++j)
-			{
-				glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18,*j);
-			}
-			if (i == 0)
-			{ // display coinsCount
-				for (int j = 1; j < buf_length; j++)
-				{
-					glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, count_buffer[j]);
-				}
-			}
-			if (i == 1)
-			{ // display lives
-				glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, count_buffer[0]);
-			}
-		}
 	glMatrixMode(GL_MODELVIEW);
 	glPopMatrix();
 	//added this
@@ -233,88 +205,6 @@ void reshape(GLsizei w, GLsizei h)
 	gluPerspective( 90, 1, 5, 30.0 );
 }
 
-void keyboard(unsigned char key, int x, int y)
-{
-	static float step = 0.1;
-	static float stepZoom = 1;
-
-	// Camera / zooming
-	switch (key)
-	{
-	case 'a':
-		// left
-		if (theta < -camLRMax)
-			return;
-		theta -= step;
-		break;
-       
-	case 'w':
-		// up
-		if (phi > camUpDownMax)
-			return;
-		phi += step;
-		break;
-       
-	case 'd':     
-		// right
-		if (theta > camLRMax)
-			return;
-		theta += step;
-		break;
-       
-	case 's':
-		// down
-		if (phi < -camUpDownMax)
-			return;
-		phi -= step;
-		break;
-
-	case 'r':
-		// zoom in
-		if (centerDistance < minZ)
-			return;
-		centerDistance -= stepZoom;
-		//positionz += stepZoom;
-		break;
-
-	case 'f':
-		// zoom out
-		if (centerDistance > maxZ)
-			return;
-		centerDistance += stepZoom;
-		//positionz -= stepZoom;
-		break;
-
-	case 'c':
-		//follow camera mode
-		pacFollowed = pacFollowed ? false : true;
-		pacFollowed ? centerDistance = maxZ - 4 : centerDistance = maxZ;
-		if(!pacFollowed)
-		{
-			// reset angles when returning from following mode
-			phi = 0;
-			theta = 0;
-		}
-		break;
-
-	case 't':
-			
-	break;
-
-	case 'g':
-
-	break;
-	}
-}
-
-// Mouse handling
-void mouse(int button, int state, int x, int y)
-{
-	if (button == GLUT_RIGHT_BUTTON) {
-		exit(0);
-	}
-}
-
 // Special keys handling (arrows)
 void special( int key, int x, int y )
 {
@@ -357,8 +247,6 @@ int main(int argc, char** argv)
 	//glutGameModeString( "800x600:16@60" );
 	//glutEnterGameMode();
 
-	glutSetCursor(GLUT_CURSOR_NONE);
-
 	glutDisplayFunc( display );
 	glutReshapeFunc( reshape ); // trzeba zmienic parametry rzutowania
 	glutIdleFunc(display); // scena jest caly czas przeliczana w tle
@@ -366,7 +254,6 @@ int main(int argc, char** argv)
 	glutTimerFunc(40, timer, 1);
 
 	glutSpecialFunc(special);
-	glutKeyboardFunc(keyboard);
 
 	// OpenGL objects initialization:
 	pacman = new Pac(15,2);
