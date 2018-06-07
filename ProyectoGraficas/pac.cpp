@@ -82,44 +82,32 @@ bool Pac::Consume()
 // helper function
 void Pac::PadAndMove(int a)
 {
-	if (angle != (a + 180) % 360)
-	{
-		Creature::Pad();
-	}
-	moving = true;
 	angle = a;
 }
 
 void Pac::Turn(int nangle) // new angle
 {
-	//std::cout << "angle " << angle << " New angle " << nangle << std::endl;
-	if (angle != nangle) // do not consider the same direction
-	{
+
 		if (nangle == 180) // wanting to go left
 		{
-				y += (1 - (y - (int)y));
 				PadAndMove(nangle);
-
 		} else
 		if (nangle == 0) // wanting to go right
 		{
-				y += (1 - (y - (int)y));
 				PadAndMove(nangle);
 
 		} else
 		if (nangle == 90) // wanting to go top
 		{
-				x += (1 - (x - (int)x));
 				PadAndMove(nangle);
 
 		} else
 		if (nangle == 270) // wanting to go bottom
 		{ // going from left
 
-				x += (1 - (x - (int)x));
 				PadAndMove(nangle);
 		}
-	}
+	
 }
 
 

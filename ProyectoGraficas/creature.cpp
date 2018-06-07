@@ -67,8 +67,7 @@ void Creature::Move()
 
 void Creature::Pad()
 {
-	x = (int)x;
-	y = (int)y;
+
 }
 
 void Creature::PadToCenter()

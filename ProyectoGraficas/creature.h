@@ -1,6 +1,4 @@
-#ifndef CREATURE_H
-#define CREATURE_H
-
+#pragma once
 class Creature
 {
 private:
@@ -32,4 +30,3 @@ public:
 
 };
 
-#endif
