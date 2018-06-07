@@ -16,19 +16,15 @@ public:
 	int coinsCount;
 
 	// static map references:
-	static int initial_map[DIM_Y][DIM_X];
 
-	// tekstury
-	BITMAP BM;
+
 
 	GameBoard();
 
-	// map visual appearance:
 	void Draw();
 	void DrawWall(int x, int y, int z);
 	void DrawWalls(int j, int i);
 
-	void TextureLoad(int id);
 };
 
 #endif
