@@ -15,16 +15,9 @@ public:
 
 	// movement:
 	void Turn(int v);
-	void Pad();
-	bool WallCheck();
+
 	void PadAndMove(int a);
 
-	// info:
-	void onTileChange() override;
-	void onTileCenter() override;
 
-	// next tile prediction:
-	int getNextTileX(int dist);
-	int getNextTileY(int dist);
 
 };

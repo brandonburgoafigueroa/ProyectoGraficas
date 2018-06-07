@@ -123,29 +123,3 @@ void Pac::Turn(int nangle) // new angle
 }
 
 
-
-// Predicts the next tile X coord based on distance:
-int Pac::getNextTileX(int dist)
-{
-	if (angle == 0)
-		return tileX + dist;
-	else if (angle == 180)
-		return tileX - dist;
-	if (angle == 90)
-		return tileX;
-	else if (angle == 270)
-		return tileX;
-}
-
-// Predicts the next tile Y coord based on distance:
-int Pac::getNextTileY(int dist)
-{
-	if (angle == 90)
-		return tileY + dist;
-	else if (angle == 270)
-		return tileY - dist;
-	else if (angle == 0)
-		return tileY;
-	else if (angle == 180)
-		return tileY;
-}

@@ -137,9 +137,3 @@ void GameBoard::DrawWalls(int j, int i)
 }
 
 // Perform checking whether there is a wall on specific tile (described as x,y)
-bool GameBoard::isWall(int x, int y)
-{
-	int idx = DIM_Y - y - 1;
-	//std::cout << "accessing: " <<  idx << "," << x << ", v: " << walls_map[idx][x] << std::endl;
-	return (initial_map[idx][x] == 1 || initial_map[idx][x] == 2);
-}

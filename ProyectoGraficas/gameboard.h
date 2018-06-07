@@ -17,7 +17,6 @@ public:
 
 	// static map references:
 	static int initial_map[DIM_Y][DIM_X];
-	static bool isWall(int x, int y);
 
 	// tekstury
 	BITMAP BM;
