@@ -6,13 +6,11 @@
 #include "GL\glut.h"
 #include "creature.h"
 #include "pac.h"
-#include "ghost_red.h"
 #include "gameboard.h"
 #include "scrnsave.h"
 #include <iostream>
 #include <string>
 
-static const int ghosts_count = 4;
 
 // board game:
 GameBoard *board;
@@ -20,14 +18,6 @@ GameBoard *board;
 // mr. pacman
 Pac *pacman;
 bool pacFollowed = false;
-
-// ghosts
-Ghost *ghosts[ghosts_count];
-float ghostsColors[] = { 1.0, 0.0,   0.0,   // Blinky
-						 1.0, 0.753, 0.796, // Pinky
-						 0.0, 1.0,   1.0,   // Inky
-						 1.0, 0.647, 0.0  // Clyde
-					   };
 
 // basic game information
 std::string infoText[] = 
@@ -217,60 +207,12 @@ void display()
 
 	// ghosts movement algorithms:
 	// Blinky:
-	if (ghosts[0]->chase)
-	{
-		// Blinky targets packman current tile coordinates while in chase mode
-		ghosts[0]->targetTileX = pacman->tileX;
-		ghosts[0]->targetTileY = pacman->tileY;
-	}
-	ghosts[0]->Move();
-
-	// Pinky:
-	if (ghosts[1]->chase)
-	{
-		// Pinky targets packman current tile + 4 ahead coordinates while in chase mode
-		ghosts[1]->targetTileX = pacman->getNextTileX(4);
-		ghosts[1]->targetTileY = pacman->getNextTileY(4);
-	}
-	ghosts[1]->Move();
-
-	// Inky:
-	if (ghosts[2]->chase)
-	{
-		// Uses pacman +2 next coordinates and blinky's position
-		ghosts[2]->targetTileX = pacman->getNextTileX(2) + (pacman->getNextTileX(2) - ghosts[0]->tileX);
-		ghosts[2]->targetTileY = pacman->getNextTileY(2) + (pacman->getNextTileY(2) - ghosts[0]->tileY);
-	}
-	ghosts[2]->Move();
-
-	// Clyde:
-	if (ghosts[3]->chase)
-	{
-		// If distance from pac > 8 then target him. Else go where Clyde's scatter points is.
-		int distSquared = abs(ghosts[3]->tileX - pacman->tileX) * abs(ghosts[3]->tileX - pacman->tileX) 
-			+ abs(ghosts[3]->tileY - pacman->tileY) * abs(ghosts[3]->tileY - pacman->tileY);
-		//std::cout << "Clyde dist to pacman: " << distSquared << std::endl;
-		if (distSquared >= 64)
-		{
-			ghosts[3]->targetTileX = pacman->tileX;
-			ghosts[3]->targetTileY = pacman->tileY;
-		}
-		else
-		{
-			ghosts[3]->targetTileX = ghosts[3]->scatterTileX;
-			ghosts[3]->targetTileY = ghosts[3]->scatterTileY;
-		}
-	}
-	ghosts[3]->Move();
-
+	
 
 	// actual pacman, ghosts and board drawing
 	board->Draw();
 	pacman->Draw();
-	ghosts[0]->Draw(phi); // Blinky
-	ghosts[1]->Draw(phi); // Pinky
-	ghosts[2]->Draw(phi); // Inky
-	ghosts[3]->Draw(phi); // Clyde
+
 	// screen information
 	DrawInfo();
 
@@ -431,23 +373,6 @@ int main(int argc, char** argv)
 	board = new GameBoard();
 
 	// Ghosts initial configuration:
-	for (int i = 0; i < ghosts_count; i++)
-	{
-		ghosts[i] = new Ghost(ghostsColors[3*i],ghostsColors[3*i + 1],ghostsColors[3*i + 2], 13 + i, 10, 2);
-	}
-
-	// Blinky:
-	ghosts[0]->scatterTileX = 0;
-	ghosts[0]->scatterTileY = GameBoard::DIM_Y + 2;
-	// Pinky:
-	ghosts[1]->scatterTileX = GameBoard::DIM_X;
-	ghosts[1]->scatterTileY = GameBoard::DIM_Y + 2;
-	// Inky:
-	ghosts[1]->scatterTileX = 0;
-	ghosts[1]->scatterTileY = -2;
-	// Clyde:
-	ghosts[3]->scatterTileX = 0;
-	ghosts[3]->scatterTileY = -2;
 
 
 	init();
