@@ -17,6 +17,22 @@ int coinAngle = 0;
 
 int GameBoard::initial_map[GameBoard::DIM_Y][GameBoard::DIM_X] =
 {  //0                   1         5         2                 29
+	{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1}, // 0
+	{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,1,0,0,0,1}, // 1
+	{1,0,1,0,1,1,1,1,1,1,1,1,0,1,0,1,1,1,0,1,0,1,1,1,0,0,0,1,0,1}, // 2
+	{1,3,1,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,0,0,0,0,1,0,1,0,1,3,1},
+	{1,0,1,0,1,1,1,0,1,1,1,1,0,0,0,0,0,1,0,1,1,1,0,0,0,1,0,1,0,1}, // 4
+
+	{1,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,0,1,1,0,0,1,0,1,0,1,0,1}, // 5
+	{1,0,1,1,1,1,1,1,1,1,1,1,0,1,0,0,0,0,0,0,1,0,1,1,0,1,0,1,0,1},
+	{1,0,0,0,0,0,0,0,0,0,1,1,0,1,0,1,1,1,1,0,0,0,0,0,0,0,0,0,0,1},
+	{1,0,1,1,1,0,1,1,1,0,1,1,0,1,0,0,0,0,0,0,1,0,1,1,0,1,1,1,1,1},
+	{1,0,0,0,1,0,0,0,1,0,0,0,0,0,0,1,1,0,1,0,1,0,0,0,0,0,0,0,0,1},
+
+	{1,1,1,0,1,1,1,0,1,0,1,1,1,1,0,0,0,0,1,0,1,1,0,1,1,1,0,1,0,1}, // 10
+	{1,3,0,0,0,0,0,0,0,0,0,0,0,1,0,1,1,0,0,0,0,0,0,0,0,0,0,1,3,1},
+	{1,0,1,1,1,1,1,0,1,1,1,1,0,1,0,0,0,0,1,1,1,1,1,0,1,1,1,1,0,1}, // 12
+	{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,1}, // 13
 	{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1}, // 14
 };
 
@@ -46,9 +62,6 @@ void GameBoard::TextureLoad(int id)
 void GameBoard::DrawWall(int x, int y, int z)
 {
 	glEnable(GL_TEXTURE_2D);
-
-	// ustawienia funkcji teksturu
-	// co one powoduja? ? GL_REPLACE ? GL _MODULATE
 	glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
 
 	glEnableClientState(GL_COLOR_ARRAY);
@@ -74,73 +87,21 @@ void GameBoard::DrawWall(int x, int y, int z)
 	glDisable(GL_TEXTURE_2D);
 }
 
-// Koniec muru.
-void DrawWallEnd(int x, int y, int z, int angle)
-{
-	// Okreslenie wspolnej tesktury.
-	glEnable(GL_TEXTURE_2D);
-	glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
-	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-	glTexCoordPointer(2,GL_FLOAT,0,textures);
 
-	glEnableClientState(GL_NORMAL_ARRAY);
-	glEnableClientState(GL_COLOR_ARRAY);
-	glEnableClientState(GL_VERTEX_ARRAY);
-	glPushMatrix();
-		glTranslatef(x,y,z);
-		glScalef(0.5,0.5,0.4);
-		glRotatef(angle + 90,0,0,1);
-		glPushMatrix();
-			glPushMatrix();
-				glTranslatef(-0.5,0.5,0); // block 1
-				glScalef(0.5,0.5,0.5);
-				Block();
-			glPopMatrix();
-			glPushMatrix();
-				glTranslatef(-0.5,-0.5,0); // block 2
-				glScalef(0.5,0.5,0.5);
-				Block();
-			glPopMatrix();
-			glPushMatrix();
-				glTranslatef(0.5,0,0); // block 3
-				glScalef(0.5,0.5,0.5);
-				Block();
-			glPopMatrix();
-			glPushMatrix(); // 1st triang
-				glScalef(1,1,0.5);
-				glTranslatef(0,-0.5,0);
-				Triang();
-			glPopMatrix();
-			glPushMatrix(); // 2nd triang
-				glTranslatef(0,0.5,0);
-				glScalef(1,1,0.5);
-				Triang2();
-			glPopMatrix();
-		glPopMatrix();
-	glPopMatrix();
-	glDisableClientState(GL_VERTEX_ARRAY);
-	glDisableClientState(GL_NORMAL_ARRAY);
-	glDisableClientState(GL_COLOR_ARRAY);
-	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
-
-	glDisable(GL_TEXTURE_2D);
-}
 
 GameBoard::GameBoard()
 {
 }
 
 void GameBoard::Draw()
-{
-	static int coinStep = 1;
-	coinStep = (coinStep + 1) % 360;
-	
+{	
 	for (int i = 0; i < DIM_X; i++)
 	{
 		for (int j = 0; j < DIM_Y; j++)
 		{
 			// wall drawing
 			DrawWalls(j,i);
+
 		}
 	}
 }
@@ -168,16 +129,10 @@ void GameBoard::DrawWalls(int j, int i)
 			if (initial_map[j][i - 1] <= 0)
 				counter++;
 			else
-				angle = 270;
-			if (counter > 2)
-			{
-				DrawWallEnd(i, DIM_Y - j - 1,CENTER_Z, angle);
-			}
+				angle = 270;}
 			else
 				DrawWall(i, DIM_Y - j - 1,CENTER_Z);
-		}
-		else
-			DrawWall(i, DIM_Y - j - 1,CENTER_Z);
+		
 	}
 }
 

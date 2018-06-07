@@ -19,19 +19,11 @@ GameBoard *board;
 Pac *pacman;
 bool pacFollowed = false;
 
-// zooming - max Z distance and min Z distance
-float maxZ = 15;
-float minZ = 8;
 
 // Camera up/down maximums:
-float camUpDownMax = 0.8;
 
-// Camera left/right maximums:
-float camLRMax = 0.8;
 
-// Camera rotation angles:
-double theta = 0;
-double phi = 0;
+
 
 // Initial camera looking target
 GLdouble centerX = GameBoard::CENTER_X;
@@ -44,77 +36,15 @@ GLdouble eyeX = 0;
 GLdouble eyeY = 0;
 GLdouble eyeZ = 0;
 
-// Lighting:
-float lightIntensity = 1;
 
 void init()
 {   
-	// ustaw intensywnosc swaitla i kolor
-	// https://www.youtube.com/watch?v=g_0yV7jZvGg
-	// https://www.youtube.com/watch?v=gFZqzVQrw84 // swietny opis rodzajow swiatel
-	// https://www.youtube.com/watch?v=oVwH8KV1xnY // najlepsze
-
-	// General OpenGL configirations:
 	glEnable(GL_DEPTH_TEST); // intialization of 3D rendering
 	glEnable(GL_COLOR_MATERIAL); // object material properties enabled
-	glColorMaterial(GL_FRONT, GL_AMBIENT_AND_DIFFUSE); // set material properties which will be assigned by glColor
-	glEnable(GL_NORMALIZE); // Automatically normalize normals (vectors of surfaces )
+
 	
 	glEnable(GL_LIGHTING); // general lighting enabled
 	glEnable(GL_LIGHT0);
-	
-	// Create light components
-	GLfloat ambientLight[] = { 0.2f, 0.2f, 0.2f, 1.0f };
-	GLfloat diffuseLight[] = { 0.8f, 0.8f, 0.8, 1.0f };
-	GLfloat specularLight[] = { 0.5f, 0.5f, 0.5f, 1.0f };
-	GLfloat position[] = { GameBoard::CENTER_X, GameBoard::CENTER_Y, 4.0f, 1.0f };
- 
-	// Assign created components to GL_LIGHT0
-	glLightfv(GL_LIGHT0, GL_AMBIENT, ambientLight);
-	glLightfv(GL_LIGHT0, GL_DIFFUSE, diffuseLight);
-	glLightfv(GL_LIGHT0, GL_SPECULAR, specularLight);
-	glLightfv(GL_LIGHT0, GL_POSITION, position);
-
-	//glLightf(GL_LIGHT0, GL_CONSTANT_ATTENUATION, 1.0);
-	//glLightf(GL_LIGHT0, GL_LINEAR_ATTENUATION, 0.6);
-	//glLightf(GL_LIGHT0, GL_QUADRATIC_ATTENUATION, 0.5);
-
-	// Add global ambient light
-    //GLfloat ambientColor[] = { 0.5, 0.5,  0.5, 1.0 };
-	//glLightModelfv( GL_LIGHT_MODEL_AMBIENT, ambientColor); // ambient lights everywhere with the same amount 
-   
-	GLfloat mat_ambient[]  = { 1.0, 1.0,  1.0, 1.0 };
-    GLfloat mat_specular[] = { 1.0, 1.0,  1.0, 1.0 };
-
-	//glMaterialfv( GL_FRONT, GL_AMBIENT, mat_ambient );
-    //glMaterialfv( GL_FRONT, GL_SPECULAR, mat_specular );
-    //glMaterialf( GL_FRONT_AND_BACK, GL_SHININESS, 10.0 );
-
-	glShadeModel(GL_SMOOTH); // smooth shading
-    glDepthFunc( GL_LESS );
-}
-
-void DrawInfo() 
-{
-	// buffer for storing coinsCount
-	static const int buf_length = 4;
-	static char count_buffer[buf_length];
-
-
-	// updating coins count
-	// http://stackoverflow.com/questions/18847109/displaying-fixed-location-2d-text-in-a-3d-opengl-world-using-glut
-	glDisable(GL_TEXTURE_2D);
-	glMatrixMode(GL_PROJECTION);
-	glLoadIdentity();
-	gluOrtho2D(0,500,0,500);
-	glMatrixMode(GL_MODELVIEW);
-	glPushMatrix();
-		glLoadIdentity();
-		glColor3d(1.0, 1.0, 1.0);
-	glMatrixMode(GL_MODELVIEW);
-	glPopMatrix();
-	//added this
-	glEnable(GL_TEXTURE_2D);
 }
 
 // renderowanie grafiki
@@ -137,58 +67,20 @@ void display()
 
 	glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT ); // czysc bufory
 
-	// lighting stuff:
+	eyeX = centerX + 5 * sin(0);
+	eyeY = centerY + centerDistance * sin(0) + 5 * sin(0);
+	eyeZ = centerZ + centerDistance * cos(0);
+	gluLookAt( eyeX, eyeY, eyeZ, centerX, centerY, centerZ, sin(0), cos(0), 0 );
 
-
-	// camera movement stuff:
-	// http://gamedev.stackexchange.com/questions/43588/how-to-rotate-camera-centered-around-the-cameras-position
-	// M_PI /2 - przesuniecie fazowe w celu dobrego wyswietlenia poczatkowego planszy
-	// implementacja operacji: ROLL (theta) (zla!) oraz PITCH (phi) ('w', 's' jest ok)
-	if (pacFollowed) 
-	{ // look at pacman 
-		centerX = pacman->x;
-		centerY = pacman->y;
-		centerZ = pacman->z;
-	}
-	else 
-	{ // look at the middle of the gameboard
-		centerX = GameBoard::CENTER_X;
-		centerY = GameBoard::CENTER_Y;
-		centerZ = GameBoard::CENTER_Z;
-	}
-
-	eyeX = centerX + 5 * sin(theta);
-	eyeY = centerY + centerDistance * sin(phi) + 5 * sin(theta);
-	eyeZ = centerZ + centerDistance * cos(phi);
-	gluLookAt( eyeX, eyeY, eyeZ, centerX, centerY, centerZ, sin(theta), cos(theta), 0 );
-
-
-	// move the pacman
 	pacman->Move();	
 	board->Draw();
 	pacman->Draw();
 
-	// screen information
-	DrawInfo();
 
-    glFlush(); // wyczysc wszystkie bufory. Standard zaleca wywolywanie tej komendy.
+    glFlush();
 	glutSwapBuffers();
 }
 
-
-void reshape(GLsizei w, GLsizei h)
-{
-    glViewport( 0, 0, w, h );
-    glMatrixMode( GL_PROJECTION );
-    glLoadIdentity();
-	        
-	GLdouble aspect = w /( GLdouble ) h;
-   
-    // rzutowanie perspektywiczne
-	gluPerspective( 90, 1, 5, 30.0 );
-}
-
-// Special keys handling (arrows)
 void special( int key, int x, int y )
 {
 	switch( key )
@@ -210,8 +102,6 @@ void special( int key, int x, int y )
         break;
     }
 
-	// odrysowanie okna
-    reshape( glutGet( GLUT_WINDOW_WIDTH ), glutGet( GLUT_WINDOW_HEIGHT ) );
 }
 
 
@@ -221,14 +111,10 @@ int main(int argc, char** argv)
 	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGBA | GLUT_DEPTH); // pojedyncze buforowanie oraz bufor glebokosci ustawiamy
 	glutInitWindowPosition( 100, 10 );
 	glutInitWindowSize( 1000, 1000 );
-	glutCreateWindow( "PackMan" ); // zainicjowany kontekst openGL'owy
-
-	//glutGameModeString( "800x600:16@60" );
-	//glutEnterGameMode();
+	glutCreateWindow("PackMan");
 
 	glutDisplayFunc( display );
-	glutReshapeFunc( reshape ); // trzeba zmienic parametry rzutowania
-	glutIdleFunc(display); // scena jest caly czas przeliczana w tle
+	glutIdleFunc(display);
 
 	glutSpecialFunc(special);
 
