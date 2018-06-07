@@ -3,10 +3,9 @@
 class Pac : public Creature {
 
 public:
-	double z;
+	
 	Pac(int x, int y):Creature(x, y)
 	{
-		z = 0;
 		speed = 0.09;
 		angle = 0;
 	}

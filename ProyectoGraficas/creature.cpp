@@ -9,6 +9,7 @@ Creature::Creature(int x_b, int y_b)
 {
 	x = x_b;
 	y = y_b;
+
 }
 
 

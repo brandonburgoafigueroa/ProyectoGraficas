@@ -1,7 +1,6 @@
 #pragma once
 class Creature
 {
-
 public:
 	
 	Creature(int x, int y);
