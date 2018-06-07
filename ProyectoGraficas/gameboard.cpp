@@ -8,9 +8,7 @@ using namespace std;
 
 // Zmienne do kontroli animacji monet:
 int coinAngle = 0;
-#define ID_1                            103
-#define IDB_BITMAP1                     104
-#define ID_2                            104
+
 // 0 - coin
 // 1 - wall
 // 2 - gate
