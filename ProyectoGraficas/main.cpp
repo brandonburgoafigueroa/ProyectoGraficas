@@ -7,12 +7,12 @@
 #include "Bordes.h"
 #include <iostream>
 #include <string>
-
-
+#include "Fantasma.h"
 Bordes *board;
 
 Pacman *pacman;
 
+Fantasma *fantasma;
 
 GLdouble centerX = Bordes::CENTRO_X;
 GLdouble centerY = Bordes::CENTRO_Y;
@@ -50,11 +50,10 @@ void Mostrar()
 	eyeY = centerY;
 	eyeZ = centerZ + 15;
 	gluLookAt( eyeX, eyeY, eyeZ, centerX, centerY, centerZ, 0, 1, 0 );
-
 	pacman->Move();	
 	board->Dibujar();
 	pacman->Draw();
-
+	fantasma->Draw();
     glFlush();
 	glutSwapBuffers();
 }
@@ -97,6 +96,7 @@ int main(int argc, char** argv)
 
 	
 	pacman = new Pacman(15,2);
+	fantasma = new Fantasma(10, 2);
 	board = new Bordes();
 
 	Inicializar();
