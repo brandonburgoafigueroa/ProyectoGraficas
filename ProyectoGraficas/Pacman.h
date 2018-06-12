@@ -1,20 +1,20 @@
 
 
-class Pac
+class Pacman
 {
 public:
 	float x, y;
-	double angle;
-	double speed;
+	double Angulo;
+	double Velocidad;
 	bool top, down, left, right;
 public:
 	
-	Pac(int x, int y)
+	Pacman(int x, int y)
 	{
 		this->x = x;
 		this->y = y;
-		speed = 0.07;
-		angle = 0;
+		Velocidad = 0.07;
+		Angulo = 0;
 		top = true;
 		down = false;
 		left = false;
@@ -67,7 +67,7 @@ void Turn(int nangle)
 }
 	void PadAndMove(int a)
 	{
-		angle = a;
+		Angulo = a;
 	}
 	void Move()
 	{
@@ -92,8 +92,8 @@ void Turn(int nangle)
 			ya = 0;
 			xa = 1;
 		}
-		x += speed * xa;
-		y += speed * ya;
+		x += Velocidad * xa;
+		y += Velocidad * ya;
 	}
 
 };

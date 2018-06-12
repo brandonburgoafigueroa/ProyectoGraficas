@@ -11,7 +11,7 @@
 
 Bordes *board;
 
-Pac *pacman;
+Pacman *pacman;
 
 
 GLdouble centerX = Bordes::CENTRO_X;
@@ -35,8 +35,7 @@ void Inicializar()
 }
 
 void Mostrar()
-{
-	float orthoOffset = 2.0f;
+{	
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
 	gluPerspective( 90, 1, 5, 30.0 );
@@ -97,7 +96,7 @@ int main(int argc, char** argv)
 	glutSpecialFunc(Teclado);
 
 	
-	pacman = new Pac(15,2);
+	pacman = new Pacman(15,2);
 	board = new Bordes();
 
 	Inicializar();
