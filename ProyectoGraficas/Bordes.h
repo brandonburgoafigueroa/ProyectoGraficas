@@ -36,14 +36,14 @@ public:
 		glEnableClientState(GL_NORMAL_ARRAY);
 		glEnableClientState(GL_VERTEX_ARRAY);
 
-		glNormalPointer(GL_FLOAT, 0, Normales);
-		glVertexPointer(3, GL_FLOAT, 0, Vertices);
-		glColorPointer(3, GL_FLOAT, 0, Colores);
+		glNormalPointer(GL_FLOAT, 0, normals);
+		glVertexPointer(3, GL_FLOAT, 0, vertices);
+		glColorPointer(3, GL_FLOAT, 0, colors);
 
 		glPushMatrix();
 		glTranslatef(x, y, z);
 		glScalef(0.5, 0.5, 0.2);
-		glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_BYTE, Indices);
+		glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_BYTE, indices);
 		glPopMatrix();
 	}
 	void DibujarPared(int j, int i)
