@@ -25,7 +25,7 @@ public:
 		glColor3f(1, 1, 0);
 		glPushMatrix();
 		glTranslatef(x, y, 0.0);
-		glutSolidSphere(2, 400, 400);
+		glutSolidSphere(1, 400, 400);
 		glPopMatrix();
 	}
 

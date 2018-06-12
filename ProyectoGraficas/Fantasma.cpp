@@ -13,7 +13,7 @@ static const double CENTER_DIM = 0.05;
 Ghost::Ghost(float tr, float tg, float tb, int tx, int ty, float tz)
 {
 	angle = 180; // initially all ghosts move to the left
-	speed = 0.003;
+	speed = 0.001;
 	x = tx;
 	y = ty;
 	z = tz;
@@ -42,7 +42,7 @@ void Ghost::Draw()
 	// overall ghost parameters:
 	glTranslatef(x, y, z / 10);
 	glColor3f(r, g, b);
-	glScalef(0.25, 0.25, 0.05);
+	glScalef(0.5, 0.5, 0.5);
 	//glRotatef(phi * 90,0,sin(phi),cos(phi)); // fix this
 	glPushMatrix();
 	glScalef(0.2, 0.2, 1);
