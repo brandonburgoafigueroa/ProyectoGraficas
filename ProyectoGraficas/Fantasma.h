@@ -1,6 +1,6 @@
 #pragma once
 #include "GL\glut.h"
-
+#include "Pacman.h"
 class Ghost {
 
 private:
@@ -36,11 +36,9 @@ public:
 	float b;
 	void Draw(); // unique ghost look
 
-	void calcCurrentTile();
 
-	bool isCenterTile();
 
-	void Move();
+	void Move(Pacman *pacman);
 
 	void Pad();
 

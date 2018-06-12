@@ -1,4 +1,4 @@
-
+#pragma once
 
 class Pacman
 {
@@ -13,7 +13,7 @@ public:
 	{
 		this->x = x;
 		this->y = y;
-		Velocidad = 0.07;
+		Velocidad = 0.05;
 		Angulo = 0;
 		top = true;
 		down = false;

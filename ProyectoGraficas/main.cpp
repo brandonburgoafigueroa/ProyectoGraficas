@@ -61,6 +61,7 @@ void Mostrar()
 	pacman->Move();	
 	board->Dibujar();
 	pacman->Draw();
+	fantasma->Move(pacman);
 	fantasma->Draw();
     glFlush();
 	glutSwapBuffers();

@@ -13,7 +13,7 @@ static const double CENTER_DIM = 0.05;
 Ghost::Ghost(float tr, float tg, float tb, int tx, int ty, float tz)
 {
 	angle = 180; // initially all ghosts move to the left
-	speed = 0.03;
+	speed = 0.003;
 	x = tx;
 	y = ty;
 	z = tz;
@@ -125,51 +125,31 @@ void Ghost::Draw()
 	glDisableClientState(GL_NORMAL_ARRAY);
 }
 
-void Ghost::calcCurrentTile()
-{
-	if ((angle == 0) && (x - (int)x > 0.5))
-		tileX = (int)ceil(x);
-	if ((angle == 180) && (x - (int)x < 0.5))
-		tileX = (int)floor(x);
-	if ((angle == 90) && (y - (int)y > 0.5))
-		tileY = (int)ceil(y);
-	if ((angle == 270) && (y - (int)y < 0.5))
-		tileY = (int)floor(y);
-}
-
-bool Ghost::isCenterTile()
-{
-	return (
-		((angle == 0) && (x - (int)x > 1 - CENTER_DIM)) ||
-		((angle == 180) && (x - (int)x < CENTER_DIM)) ||
-		((angle == 90) && (y - (int)y > 1 - CENTER_DIM)) ||
-		((angle == 270) && (y - (int)y < CENTER_DIM))) ? true : false;
-}
 
 // Basic movement algorithm.
-void Ghost::Move()
+void Ghost::Move(Pacman *pacman)
 {
-	if (moving)
+	if (pacman->top || pacman->down)
 	{
-		x += speed * cos(M_PI / 180 * angle); // dodawany jakis staly interwal
-		y += speed * sin(M_PI / 180 * angle);
-
-		if (!atCenter && isCenterTile())
+		if (y < pacman->y)
 		{
-			atCenter = true;
-			//onTileCenter();
+			y = y + y * speed;
+		}
+		else
+		{
+			y = y - y * speed;
 		}
 	}
-
-	int oldTileX = tileX;
-	int oldTileY = tileY;
-
-	calcCurrentTile();
-
-	if (tileX != oldTileX || tileY != oldTileY) // kiedy wszedlem na nowa plytke
+	if (pacman->left || pacman->right)
 	{
-		atCenter = false;  // wtedy moge szukac centrum nowej plytki
-						   //onTileChange();
+		if (x < pacman->x)
+		{
+			x = x + x * speed;
+		}
+		else
+		{
+			x = x - x * speed;
+		}
 	}
 }
 
