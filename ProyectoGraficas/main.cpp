@@ -12,14 +12,7 @@ Bordes *board;
 
 Pacman *pacman;
 
-Ghost *fantasma;
-
-float ghostsColors[] = { 1.0, 0.0,   0.0,   // Blinky
-1.0, 0.753, 0.796, // Pinky
-0.0, 1.0,   1.0,   // Inky
-1.0, 0.647, 0.0  // Clyde
-};
-
+Fantasma *fantasma;
 
 
 GLdouble centerX = Bordes::CENTRO_X;
@@ -105,7 +98,7 @@ int main(int argc, char** argv)
 
 	
 	pacman = new Pacman(15,2);
-	fantasma = new Ghost(ghostsColors[3 * 0], ghostsColors[3 * 0 + 1], ghostsColors[3 * 0 + 2], 13 + 0, 10, 2);
+	fantasma = new Fantasma(0,0,1, 13 + 0, 10, 2);
 	board = new Bordes();
 
 	Inicializar();

@@ -36,9 +36,9 @@ public:
 		glEnableClientState(GL_NORMAL_ARRAY);
 		glEnableClientState(GL_VERTEX_ARRAY);
 
-		glNormalPointer(GL_FLOAT, 0, normals);
+		glNormalPointer(GL_FLOAT, 0, normales);
 		glVertexPointer(3, GL_FLOAT, 0, vertices);
-		glColorPointer(3, GL_FLOAT, 0, colors);
+		glColorPointer(3, GL_FLOAT, 0, colores);
 
 		glPushMatrix();
 		glTranslatef(x, y, z);
